@@ -22,7 +22,7 @@ function getValues() {
 }
 
 function checkForPalindrome(input) {
-    let output = '';
+    let output = [''];
 
     for(let i=input.length - 1; i >= 0; i--) {
         let letter = input[i];
@@ -39,10 +39,10 @@ function checkForPalindrome(input) {
 //display the reversed message
 function displayResults(results) {
     if(results[0] == true) {
-        document.getElementById('input').textContent = `You're message is a palindrome: ${results[1]}`;
+        document.getElementById('input').textContent = `Your message is a palindrome: ${results[1]}`;
         document.getElementById('alert').classList.remove('invisible');
     } else {
-        document.getElementById('input').textContent = `Sorry, you're message is not a palindrome: ${results[1]}`;
+        document.getElementById('input').textContent = `Sorry, your message is not a palindrome: ${results[1]}`;
         document.getElementById('alert').classList.remove('invisible');
     }
 }
