@@ -5,9 +5,9 @@
 //display the message either confirming or denying if it is a palindrome
 
 function getValues() {
-    let input = document.getElementById('userInput').value
+    let msg = document.getElementById('userInput').value
 
-    if (input.length == 0) {
+    if (msg.length == 0) {
         Swal.fire({
             icon: 'error',   //error message if no text is entered
             backdrop: false,
@@ -15,33 +15,49 @@ function getValues() {
             text: 'You played yourself! Try entering some text into the input box...'
         })
     } else {
-        let results = checkForPalindrome(input);
+        let palindromeObject = checkForPalindrome(message);
 
-        displayResults(results);
+        displayResults(palindromeObject);
     }
 }
 
-function checkForPalindrome(input) {
-    let letter = input.length - 1;
-    
-	for( let i = 0 ; i < letter/2 ;i++) {
-            let beginning_char = input[i] ;
+function reverseMessage(input) {
+    let output = '';
 
-            let end_char = input[letter-i];
+    for (let i = input.length - 1; i >= 0; i--) {
+        output += input[i];
+    };
 
-            if( beginning_char != end_char) {
-                    return false;
-                }
-	}
-	return true;
+    return output;
+
 }
 
-function displayResults(results) {
-    if (results[0] == true) {
-        document.getElementById('input').textContent = `Your message is a palindrome: ${results[1]}`; //display if is a palindrome
-        document.getElementById('alert').classList.remove('invisible');
+function checkForPalindrome(input) {
+    let regex = /[^a-zA-Z0-9]/g;  // defining the shortcut to call for non-letter symbols using regex
+
+    let cleanInput = input.replace(regex, ''); //take out spaces and symbols, making them irrelevant to the determination
+    cleanInput = cleanInput.toLowerCase();
+
+    let reversed = reverseMessage(cleanInput);
+    let wordIsAPalindrome = reversed == cleanInput;
+
+    let results = {
+        reverseMessage: reversed,
+        isPalindrome: wordIsAPalindrome,
+        originalMessage: input
+    };
+
+    return results;
+}
+
+function displayResults(palindromeObject) {
+    document.getElementById('alert').classList.remove('invisible', 'alert-danger', 'alert-success');
+
+    if (palindromeObject.isPalindrome == true) {
+        document.getElementById('msg').textContent = `Hey, ${palindromeObject.reversedmessage} is a palindrome!`;
+        document.getElementById('alert').classList.add('alert-success');
     } else {
-        document.getElementById('input').textContent = `Sorry, your message is not a palindrome: ${results[1]}`;  //display if NOT a palindrom
-        document.getElementById('alert').classList.remove('invisible');
+        document.getElementById('msg').textContent = `Sorry, ${palindromeObject.reversedmessage} is not a palindrome. Try again!`;
+        document.getElementById('alert').classList.add('alert-danger');
     }
 }
