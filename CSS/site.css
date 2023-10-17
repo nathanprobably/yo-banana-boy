@@ -3,6 +3,7 @@
     --nl-secondary-color: #5fa43c; /*theme core or 500 or 600*/
     --nl-light-color: #dfe3e4;
     --nl-dark-color: #1b1b1b;
+    --nl-yellow-color: #f9e911;
 }
 
 /*#region Sticky footer*/
@@ -27,7 +28,7 @@ footer {
 /*#endregion Sticky footer*/
 
 nav .nav-link:hover {
-    color: var(--nl-secondary-color) !important;
+    color: var(--nl-light-color) !important;
 }
 
 footer, nav.navbar {
@@ -51,9 +52,29 @@ footer .bi:hover {
 }
 
 .bi-check-square-fill {
-    color: var(--nl-secondary-color);
+    color: var(--nl-yellow-color);
 }
 
 .app-logo {
-    max-width: 400px;
+    max-width: 1200px;
 }
+
+.btn-outline-primary {
+    color: var(--nl-secondary-color);
+    border: var(--nl-primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--nl-primary-color);
+    color: var(--nl-secondary-color);
+    border: 0;
+}
+
+.display-6 {
+    color: var(--nl-yellow-color);
+}
+
+.lead {
+    color: var(--nl-yellow-color);
+}
+
