@@ -15,7 +15,7 @@ function getValues() {
             text: 'You played yourself! Try entering some text into the input box...'
         })
     } else {
-        let palindromeObject = checkForPalindrome(message);
+        let palindromeObject = checkForPalindrome(input);
 
         displayResults(palindromeObject);
     }
