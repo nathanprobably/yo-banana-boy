@@ -9,40 +9,39 @@ function getValues() {
 
     if (input.length == 0) {
         Swal.fire({
-            icon: 'error',
+            icon: 'error',   //error message if no text is entered
             backdrop: false,
             title: 'Hmm...',
             text: 'You played yourself! Try entering some text into the input box...'
         })
     } else {
-       let results = checkForPalindrome(input);
+        let results = checkForPalindrome(input);
 
-       displayResults(results);
+        displayResults(results);
     }
 }
 
 function checkForPalindrome(input) {
-    let output = [''];
+    let letter = input.length - 1;
+    
+	for( let i = 0 ; i < letter/2 ;i++) {
+            let beginning_char = input[i] ;
 
-    for(let i=input.length - 1; i >= 0; i--) {
-        let letter = input[i];
-        output += letter
-    }
+            let end_char = input[letter-i];
 
-    if(output.toLowerCase().split('').join('').replace(/[^a-zA-z0-9 ]/g, '') !=input.toLowerCase().split('').join('').replace(/[^a-zA-z0-9 ]/g, '')) {
-        return [false, output]
-    } else {
-        return [true, output];
-        }
+            if( beginning_char != end_char) {
+                    return false;
+                }
+	}
+	return true;
 }
 
-//display the reversed message
 function displayResults(results) {
-    if(results[0] == true) {
-        document.getElementById('input').textContent = `Your message is a palindrome: ${results[1]}`;
+    if (results[0] == true) {
+        document.getElementById('input').textContent = `Your message is a palindrome: ${results[1]}`; //display if is a palindrome
         document.getElementById('alert').classList.remove('invisible');
     } else {
-        document.getElementById('input').textContent = `Sorry, your message is not a palindrome: ${results[1]}`;
+        document.getElementById('input').textContent = `Sorry, your message is not a palindrome: ${results[1]}`;  //display if NOT a palindrom
         document.getElementById('alert').classList.remove('invisible');
     }
 }
