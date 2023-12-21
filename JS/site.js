@@ -5,9 +5,9 @@
 //display the message either confirming or denying if it is a palindrome
 
 function getValues() {
-    let msg = document.getElementById('userInput').value
+    let message = document.getElementById('message').value;
 
-    if (msg.length == 0) {
+    if (message.length == 0) {
         Swal.fire({
             icon: 'error',   //error message if no text is entered
             backdrop: false,
@@ -15,49 +15,61 @@ function getValues() {
             text: 'You played yourself! Try entering some text into the input box...'
         })
     } else {
-        let palindromeObject = checkForPalindrome(input);
+        let palindromeMsg = checkForPalindrome(message);
 
-        displayResults(palindromeObject);
+        displayResults(palindromeMsg);
     }
 }
 
-function reverseMessage(input) {
-    let output = '';
+function checkForPalindrome(message) {
+    let regex = /[A-Za-z0-9]/;
 
-    for (let i = input.length - 1; i >= 0; i--) {
-        output += input[i];
-    };
+    let cleanInput = '';
 
-    return output;
+    let revClean = '';
 
+    let output = [];
+
+    for (let i = 0; i < message.length; i++) {
+        if (regex.test(message[i])) {
+            cleanInput += message[i].toLowerCase();
+        }
+    }
+
+    for (let i = cleanInput.length - 1; i >= 0; i--) {
+        revClean += cleanInput[i];
+    }
+
+    if (cleanInput == '') {
+        output.push('error');
+        return output;
+    }
+    else if (cleanInput == revClean) {
+        output.push(true);
+        output.push(revClean);
+        return output;
+    } else {
+        output.push(false);
+        output.push(revClean);
+        output.push(cleanInput.length * 5 % 100 + 20);
+        return output;
+    }
 }
 
-function checkForPalindrome(input) {
-    let regex = /[^a-zA-Z0-9]/g;  // defining the shortcut to call for non-letter symbols using regex
-
-    let cleanInput = input.replace(regex, ''); //take out spaces and symbols, making them irrelevant to the determination
-    cleanInput = cleanInput.toLowerCase();
-
-    let reversed = reverseMessage(cleanInput);
-    let wordIsAPalindrome = reversed == cleanInput;
-
-    let results = {
-        reverseMessage: reversed,
-        isPalindrome: wordIsAPalindrome,
-        originalMessage: input
-    };
-
-    return results;
-}
-
-function displayResults(palindromeObject) {
+function displayResults(message) {
     document.getElementById('alert').classList.remove('invisible', 'alert-danger', 'alert-success');
 
-    if (palindromeObject.isPalindrome == true) {
-        document.getElementById('msg').textContent = `Hey, ${palindromeObject.reversedmessage} is a palindrome!`;
+    if (message[0] == true) {
+        document.getElementById('results').textContent = 'Yo, Banana Boy! You have a palindrome!';
+        document.getElementById('msg').textContent = `You got ${message[1]}`;
         document.getElementById('alert').classList.add('alert-success');
+    } else if (message[0] == 'error') {
+        document.getElementById('results').textContent = 'Not very a-peel-ing!';
+        document.getElementById('msg').textContent = 'Please use letters or numbers.';
+        document.getElementById('alert').classList.add('alert-warning');
     } else {
-        document.getElementById('msg').textContent = `Sorry, ${palindromeObject.reversedmessage} is not a palindrome. Try again!`;
+        document.getElementById('results').textContent = 'No, Banana Boy! Not quite a palindrome!';
+        document.getElementById('msg').textContent = `You got ${message[1]}`;
         document.getElementById('alert').classList.add('alert-danger');
     }
 }
